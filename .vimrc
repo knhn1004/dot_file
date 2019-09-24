@@ -30,6 +30,8 @@ Plugin 'takac/vim-hardtime'
 Plugin 'gko/vim-coloresque'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bagrat/vim-buffet'
+Plugin 'Yggdroot/indentLine'
+Plugin 'junegunn/vim-easy-align'
 
 
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -113,7 +115,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " specify Ctrl+n to open NERDTree"
-map <C-n> :NERDTreeToggle<CR>
+verbose map <F3> :NERDTreeToggle<CR>
 "close vim if the only window left open is a NERDTree"
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "set relative line numbers upon entering nerdtree on vim"
@@ -146,7 +148,7 @@ let g:syntastic_check_on_wq = 0
 
 " prettier settings --------------------------------------------------------
 " By default parsing errors will open the quickfix but can also be disabled
-let g:prettier#quickfix_enabled = 0
+" let g:prettier#quickfix_enabled = 0
 " By default we auto focus on the quickfix when there are errors but can also be disabled
 " let g:prettier#quickfix_auto_focus = 0
 
@@ -179,5 +181,25 @@ nmap <leader>8 <Plug>BuffetSwitch(8)
 nmap <leader>9 <Plug>BuffetSwitch(9)
 nmap <leader>0 <Plug>BuffetSwitch(10)
 
+" wipe the current buffer without closing the window
+noremap <Leader>b :Bw!<CR>
+" wipe every buffer except this window
+noremap <Leader><Leader>b :Bonly!<CR>
+
 let g:buffet_always_show_tabline = 1
 let g:buffet_show_index = 1
+
+function! g:BuffetSetCustomColors()
+    hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
+    hi! BuffetBuffer cterm=NONE ctermbg=6 ctermfg=8 guibg=#00FF00 guifg=#000000
+
+endfunction
+
+" vim-easy-align settings -----------------------------------
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" vim fold settings
+set foldmethod=indent
