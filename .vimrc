@@ -2,7 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 " alternatively, pass a path where Vundle should install plugins
 "let path = '~/some/path/here'
@@ -23,7 +23,6 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-surround'
 Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'prettier/vim-prettier'
 Plugin 'takac/vim-hardtime'
@@ -32,6 +31,13 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bagrat/vim-buffet'
 Plugin 'Yggdroot/indentLine'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'dense-analysis/ale'
+Plugin 'ervandew/supertab'
+Plugin 'SirVer/ultisnips'
+Plugin 'jvanja/vim-bootstrap4-snippets'
+Plugin 'honza/vim-snippets'
+
 
 
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -96,11 +102,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 
-" mapping capslock to esc in vim-------------------------------------
-au VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-
-
 " color scheme -----------------------------------------------------
 syntax on
 set t_Co=256
@@ -114,8 +115,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "open NERDTree automatically when vim starts up on opening a directory"
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-" specify Ctrl+n to open NERDTree"
-verbose map <F3> :NERDTreeToggle<CR>
+" specify Ctrl+a to open NERDTree"
+verbose map <C-a> :NERDTreeToggle<CR>
 "close vim if the only window left open is a NERDTree"
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "set relative line numbers upon entering nerdtree on vim"
@@ -131,20 +132,17 @@ let g:NERDCommentEmptyLines = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
 
-" syntastic recommend setting ---------------------------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" ale settings -------------------------------------------------
+" Fix files with prettier, and then ESLint.
+let b:ale_fixers = ['prettier', 'eslint']
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+" use quickfix instead of loclist
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+" quickfix setting
+nnoremap <Leader>qf :cw<cr>
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
- "let g:syntastic_javascript_checkers = ['standard']
- "let g:syntastic_javascript_standard_generic = 1
- let g:syntastic_javascript_checkers = ['eslint']
- let g:syntastic_javascript_eslint_exec = 'eslint'
 
 " prettier settings --------------------------------------------------------
 " By default parsing errors will open the quickfix but can also be disabled
@@ -182,9 +180,9 @@ nmap <leader>9 <Plug>BuffetSwitch(9)
 nmap <leader>0 <Plug>BuffetSwitch(10)
 
 " wipe the current buffer without closing the window
-noremap <Leader>b :Bw!<CR>
+noremap <Leader>d :Bw!<CR>
 " wipe every buffer except this window
-noremap <Leader><Leader>b :Bonly!<CR>
+noremap <Leader><Leader>d :Bonly!<CR>
 
 let g:buffet_always_show_tabline = 1
 let g:buffet_show_index = 1
@@ -203,3 +201,41 @@ nmap ga <Plug>(EasyAlign)
 
 " vim fold settings
 set foldmethod=indent
+
+" background color bug fix
+if &term =~ '256color'
+		" Disable Background Color Erase (BCE) so that color schemes
+		" work properly when Vim is used inside tmux and GNU screen.
+		set t_ut=
+endif
+
+
+" disable highlight after searching-------------------------------------
+nnoremap <Leader><space> :noh<cr>
+
+" ultisnips settings--------------------------------------------------
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsListSnippets="<Leader><tab>"
+
+
+" set listchars-------------------------------------------------
+set list
+set listchars=eol:¬
+set list lcs=tab:\|\ 
+
+" shell fix --------------------------------------------------------
+set shellcmdflag=-ic
+
+" tabstop settings--------------------------------------------------
+autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
+" indentLine settings---------------------------------------------------
+
