@@ -188,7 +188,7 @@ let g:buffet_always_show_tabline = 1
 let g:buffet_show_index = 1
 
 function! g:BuffetSetCustomColors()
-    hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
+    hi! BuffetCurrentBuffer cterm=NONE ctermbg=1 ctermfg=8 guibg=#00FF00 guifg=#000000
     hi! BuffetBuffer cterm=NONE ctermbg=6 ctermfg=8 guibg=#00FF00 guifg=#000000
 
 endfunction
@@ -228,14 +228,20 @@ let g:UltiSnipsListSnippets="<Leader><tab>"
 
 " set listchars-------------------------------------------------
 set list
-set listchars=eol:¬
 set list lcs=tab:\|\ 
+set listchars=eol:¬
 
 " shell fix --------------------------------------------------------
 set shellcmdflag=-ic
 
 " tabstop settings--------------------------------------------------
-autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss setlocal tabstop=2 shiftwidth=2 softtabstop=2
+set tabstop=4 shiftwidth=4 softtabstop=4
+autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss,*.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
 
 " indentLine settings---------------------------------------------------
 
+
+" powerline settings;
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup

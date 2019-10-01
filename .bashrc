@@ -121,3 +121,9 @@ alias python=python3
 alias ll='ls -la'
 alias pip=pip3
 alias op='explorer.exe'
+
+# powerline setting
+POWERLINE_SCRIPT=/usr/share/powerline/bindings/bash/powerline.sh
+if [ -f $POWERLINE_SCRIPT ]; then
+  source $POWERLINE_SCRIPT
+fi
