@@ -37,6 +37,7 @@ Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
 Plugin 'jvanja/vim-bootstrap4-snippets'
 Plugin 'honza/vim-snippets'
+Plugin 'pangloss/vim-javascript'
 
 
 
@@ -228,8 +229,7 @@ let g:UltiSnipsListSnippets="<Leader><tab>"
 
 " set listchars-------------------------------------------------
 set list
-set list lcs=tab:\|\ 
-set listchars=eol:¬
+set listchars=eol:¬,tab:\|\
 
 " shell fix --------------------------------------------------------
 set shellcmdflag=-ic
