@@ -38,6 +38,11 @@ Plugin 'SirVer/ultisnips'
 Plugin 'jvanja/vim-bootstrap4-snippets'
 Plugin 'honza/vim-snippets'
 Plugin 'pangloss/vim-javascript'
+Plugin 'MaxMEllon/vim-jsx-pretty'
+Plugin 'tpope/vim-repeat'
+Plugin 'jiangmiao/auto-pairs'
+" Plugin 'alvan/vim-closetag'
+Plugin 'mattn/emmet-vim'
 
 
 
@@ -130,19 +135,57 @@ autocmd BufEnter NERD_* setlocal rnu
 let g:NERDSpaceDelims = 1
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
+" jsx fix
+let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' } }
+
 " ale settings -------------------------------------------------
-" Fix files with prettier, and then ESLint.
-let b:ale_fixers = ['prettier', 'eslint']
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 " use quickfix instead of loclist
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
+
+let g:jsx_ext_required = 0
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_options = '--no-semi --single-quote --trailing-comma none'
+let g:jsx_ext_required = 0
+let g:ale_linters = {
+			\   'javascript': ['standard'],
+			\}
+let g:ale_fixers = {
+			\   'javascript': ['prettier', 'eslint'],
+			\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+			\}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_options = '--no-semi --single-quote --trailing-comma none'
+
 " quickfix setting
 nnoremap <Leader>qf :cw<cr>
+
+" ALE keybindings
+nnoremap <leader>af :ALEFix<cr>
+"Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
 
 
 " prettier settings --------------------------------------------------------
@@ -237,11 +280,52 @@ set shellcmdflag=-ic
 " tabstop settings--------------------------------------------------
 set tabstop=4 shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss,*.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.js set nolist
 
 " indentLine settings---------------------------------------------------
 
 
-" powerline settings;
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+" powerline settings----------------------------------------------------
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
+
+" vim-closetag settings----------------------------
+
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+" let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+"
+" " filenames like *.xml, *.xhtml, ...
+" " This will make the list of non-closing tags self-closing in the specified files.
+" let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+"
+" " filetypes like xml, html, xhtml, ...
+" " These are the file types where this plugin is enabled.
+" let g:closetag_filetypes = 'html,xhtml,phtml'
+"
+" " filetypes like xml, xhtml, ...
+" " This will make the list of non-closing tags self-closing in the specified files.
+" let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+"
+" " integer value [0|1]
+" " This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+" let g:closetag_emptyTags_caseSensitive = 1
+"
+" " dict
+" " Disables auto-close if not in a "valid" region (based on filetype)
+" let g:closetag_regions = {
+"     \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+"     \ 'javascript.jsx': 'jsxRegion',
+"     \ }
+"
+" " Shortcut for closing tags, default is '>'
+" let g:closetag_shortcut = '>'
+"
+" " Add > at current position without closing the current tag, default is ''
+" let g:closetag_close_shortcut = '<leader>>'
+
+
+" emmet-vim setting--------------------------------------------
+" let g:user_emmet_leader_key='<C-E>'
+let g:user_emmet_mode='inv'  "enable all functions, which is equal to
