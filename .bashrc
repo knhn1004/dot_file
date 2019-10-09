@@ -123,7 +123,31 @@ alias pip=pip3
 alias op='explorer.exe'
 
 # powerline setting
-POWERLINE_SCRIPT=/usr/share/powerline/bindings/bash/powerline.sh
-if [ -f $POWERLINE_SCRIPT ]; then
-  source $POWERLINE_SCRIPT
+# POWERLINE_SCRIPT=/usr/share/powerline/bindings/bash/powerline.sh
+# if [ -f $POWERLINE_SCRIPT ]; then
+  # source $POWERLINE_SCRIPT
+# fi
+
+# virtualenv-wrapper setting
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
+export WORKON_HOME=~/.virtualenvs
+source /home/chz1004/.local/bin/virtualenvwrapper.sh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/chz1004/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+	eval "$__conda_setup"
+else
+	if [ -f "/home/chz1004/anaconda3/etc/profile.d/conda.sh" ]; then
+		. "/home/chz1004/anaconda3/etc/profile.d/conda.sh"
+	else
+		export PATH="/home/chz1004/anaconda3/bin:$PATH"
+	fi
 fi
+unset __conda_setup
+# <<< conda initialize <<<
+CONDA_AUTO_ACTIVATE_BASE=false
+alias cdact='conda activate'
+alias cddact='conda deactivate'
+alias cdenvls='conda env list'
