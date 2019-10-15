@@ -81,19 +81,13 @@ filetype plugin indent on     " required
 set number
 set rnu
 
-
 " cursor ---------------------------------------------------------------
 set cursorcolumn
-
 
 " searching ---------------------------------------------------------------
 set ignorecase
 set hlsearch
 set incsearch
-
-
-" default tabs ---------------------------------------------------------------
-set tabstop=4
 
 
 " for splitting windows ---------------------------------------------
@@ -106,7 +100,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
 
 " color scheme -----------------------------------------------------
 syntax on
@@ -128,7 +121,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "set relative line numbers upon entering nerdtree on vim"
 let g:NERDTreeShowLineNumbers=1
 autocmd BufEnter NERD_* setlocal rnu
-
 
 " nerdcommenter settings ----------------------------------------------------
 " Add spaces after comment delimiters by default
@@ -267,17 +259,17 @@ set listchars=eol:¬,tab:\|\
 set shellcmdflag=-ic
 
 " tabstop settings--------------------------------------------------
-set tabstop=4 shiftwidth=4 softtabstop=4
-autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss,*.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
+set shiftwidth=4 softtabstop=4
+autocmd BufRead,BufNewFile *.htm,*.html,*.css,*.scss,*.js,*.json,*.yml setlocal shiftwidth=2 softtabstop=2
 autocmd BufRead,BufNewFile *.js set nolist
 
 " indentLine settings---------------------------------------------------
 
 
 " powerline settings----------------------------------------------------
-" python3 from powerline.vim import setup as powerline_setup
-" python3 powerline_setup()
-" python3 del powerline_setup
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 
 " .js file jsx fix-----------------------------------------------------
 " autocmd BufNewFile,BufRead *.js set filetype=javascript.jsx

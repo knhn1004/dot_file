@@ -151,3 +151,7 @@ CONDA_AUTO_ACTIVATE_BASE=false
 alias cdact='conda activate'
 alias cddact='conda deactivate'
 alias cdenvls='conda env list'
+alias jptnb='jupyter notebook --no-browser'
+
+# xserver setting
+export DISPLAY=127.0.0.1:0
