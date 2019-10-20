@@ -43,6 +43,10 @@ Plugin 'tpope/vim-repeat'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'alvan/vim-closetag'
 Plugin 'mattn/emmet-vim'
+Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'adelarsq/vim-matchit'
+Plugin 'andymass/vim-matchup'
+Plugin 'kshenoy/vim-signature'
 
 
 
@@ -178,7 +182,7 @@ nnoremap [r :ALEPreviousWrap<CR>
 
 " vim-hardtime settings ----------------------------------------------------
 " hardtime to run in every buffer
-let g:hardtime_default_on = 1
+" let g:hardtime_default_on = 1
 " Set the list of keys to be banned of use with hardtime
 let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
@@ -283,3 +287,15 @@ let g:closetag_close_shortcut = '<leader>>'
 " emmet-vim setting--------------------------------------------
 " let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_mode='inv'  "enable all functions, which is equal to
+
+" comments italic
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+highlight Comment cterm=italic gui=italic
+
+
+" registers shortcut
+nnoremap <Leader>r :registers<cr>
+
+" marks shortcut
+nnoremap <Leader>m :marks<cr>
